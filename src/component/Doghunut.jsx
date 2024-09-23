@@ -8,7 +8,7 @@ const Doghunut = ({percentage}) => {
     
     <div>
         <Doughnut
-        const data = {{
+         data = {{
             labels: [
               
                 percentage.toString()

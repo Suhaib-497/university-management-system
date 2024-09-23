@@ -33,6 +33,7 @@ const SideBar = ({ toggleSidebar, show }) => {
       </div>
     ) : (
       <Link
+        to={`${SideName.trim() === "Dashbord" ? "/" : SideName}`}
         onClick={() => {
           SetToggler(SideName), setLineDash(SideName);
         }}
@@ -57,41 +58,55 @@ const SideBar = ({ toggleSidebar, show }) => {
           >
             <MenuIcon className="text-white" />
           </button>
-          <Link className="text-white">
+          <Link to={"/"} className="text-white">
             <SpaceDashboardIcon
               className={`${
                 lineDash == sideNames.Dashboard
                   ? "border-start border-white  "
                   : "border-start-0"
               } fs-2 `}
+              onClick={() => {
+                SetToggler(sideNames.Dashboard),
+                  setLineDash(sideNames.Dashboard);
+              }}
             />
           </Link>
 
-          <Link className="text-white">
+          <Link to={`/Courses`} className="text-white">
             <AutoStoriesIcon
               className={`${
                 lineDash == sideNames.Courses
                   ? "border-start border-white"
                   : "border-start-0"
               } fs-2`}
+              onClick={() => {
+                SetToggler(sideNames.Courses), setLineDash(sideNames.Courses);
+              }}
             />
           </Link>
-          <Link className="text-white">
+          <Link className="text-white" to={`/Time_table`}>
             <EventNoteRoundedIcon
               className={`${
                 lineDash == sideNames.Time_table
                   ? "border-start border-white"
                   : "border-start-0"
               } fs-2`}
+              onClick={() => {
+                SetToggler(sideNames.Time_table),
+                  setLineDash(sideNames.Time_table);
+              }}
             />
           </Link>
-          <Link className="text-white">
+          <Link className="text-white" to={`/Exams`}>
             <PendingActionsRoundedIcon
               className={`${
                 lineDash == sideNames.Exams
                   ? "border-start border-white"
                   : "border-start-0"
               } fs-2`}
+              onClick={() => {
+                SetToggler(sideNames.Exams), setLineDash(sideNames.Exams);
+              }}
             />
           </Link>
           <Link className="text-white">
@@ -101,6 +116,9 @@ const SideBar = ({ toggleSidebar, show }) => {
                   ? "border-start border-white"
                   : "border-start-0"
               } fs-2`}
+              onClick={() => {
+                SetToggler(sideNames.Library), setLineDash(sideNames.Library);
+              }}
             />
           </Link>
           <Link className="text-white">
@@ -110,6 +128,10 @@ const SideBar = ({ toggleSidebar, show }) => {
                   ? "border-start border-white"
                   : "border-start-0"
               } fs-2`}
+              onClick={() => {
+                SetToggler(sideNames.Scholar_ship),
+                  setLineDash(sideNames.Scholar_ship);
+              }}
             />
           </Link>
         </div>
@@ -122,15 +144,13 @@ const SideBar = ({ toggleSidebar, show }) => {
         <h5>
           University <br /> Managment System{" "}
         </h5>
-        
+
         {ChangeSideBar(sideNames.Dashboard)}
         {ChangeSideBar(sideNames.Courses)}
         {ChangeSideBar(sideNames.Time_table)}
         {ChangeSideBar(sideNames.Exams)}
         {ChangeSideBar(sideNames.Library)}
         {ChangeSideBar(sideNames.Scholar_ship)}
-
-       
       </div>
     </div>
   );
