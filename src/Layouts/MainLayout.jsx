@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import NavBar from "../component/NavBar";
-import SideBar from "../component/SideBar";
+import SideBar from "../component/StComponent/SideBar";
+import FacultySideBar from "../component/FacultyComponent/FacultySideBar";
 import { Outlet } from "react-router-dom";
-import ShowContext from "../Context/ShowContext";
-import { Height } from "@mui/icons-material";
+
 
 const MainLayout = () => {
   const [show, setShow] = useState(false);
@@ -13,9 +13,10 @@ const MainLayout = () => {
   };
 
   return (
-    <div className="d-flex" style={{transitionDuration:"1000ms"}}>
+    <div className="d-flex " style={{transitionDuration:"1000ms",height:"37.5rem"}}>
       <div className={`${show ? "col" : "col-1"} `} style={{transitionDuration:"500ms"}}>
-        <SideBar toggleSidebar={toggleSidebar} show={show} />
+        {/* <SideBar toggleSidebar={toggleSidebar} show={show} /> */}
+        <FacultySideBar toggleSidebar={toggleSidebar} show={show} />
       </div>
       <div className={`${show ? "col-9" : "col-11"} `} style={{transitionDuration:"1000ms"}}>
         <NavBar show={show} />

@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from "react";
 import AccessTimeRoundedIcon from "@mui/icons-material/AccessTimeRounded";
-const Time_table = () => {
+const Time_table = ({
+  day = "monday",
+  StartTime = "8:30",
+  EndTime = "10:30",
+}) => {
   const [ttime, setTtime] = useState(new Date().getMinutes());
   const [hour, setHour] = useState(new Date().getHours());
   const [top, setTop] = useState(200);
-
+  const DifferentTime = Math.abs(parseFloat(StartTime) - parseFloat(EndTime));
+  console.log(DifferentTime);
+  parseInt;
   useEffect(() => {
     const Interval = setInterval(() => {
       const now = new Date();
@@ -12,7 +18,6 @@ const Time_table = () => {
       setTtime(now.getMinutes());
       setHour(now.getHours());
     }, 60000);
-
     return () => clearInterval(Interval);
   }, []);
 
@@ -55,6 +60,125 @@ const Time_table = () => {
   console.log(hour);
   console.log(ttime);
 
+  function InsertingTime1() {
+    return (
+      <td className=" d-flex justify-content-center pt-0">
+        <div
+          className="  position-absolute border border-success border-3   py-0 d-flex flex-column justify-content-between gap-1 mt-3"
+          style={{
+            width: "10%",
+            height: "70px",
+            backgroundColor: "rgba(41, 204, 57, 5%)",
+            borderColor: "rgba(41, 204, 57, 100%)",
+          }}
+        >
+          <div className="d-flex flex-row gap-1 justify-content-around">
+            <div
+              className="col-3 bg-success px-1  rounded-3 rounded-top-0 text-white  "
+              style={{ fontSize: "0.8vw" }}
+            >
+              {StartTime}
+            </div>
+            <div
+              className="col-3 bg-success px-1 rounded-3 rounded-top-0 text-white "
+              style={{ fontSize: "0.8vw" }}
+            >
+              {EndTime}
+            </div>
+
+            <div
+              className="col-4 bg-success px-1  rounded-3 rounded-top-0 text-white "
+              style={{ fontSize: "0.8vw" }}
+            >
+              Theory
+            </div>
+          </div>
+
+          <span className="text-success-emphasis  " style={{ fontSize: "1vw" }}>
+            Data Comunnication
+          </span>
+          <div className="d-flex flex-row justify-content-between mt-1">
+            <span
+              className="text-success-emphasis col-2 "
+              style={{ fontSize: "9px" }}
+            >
+              Dr,Sara
+            </span>
+            <span
+              className="col-3 text-white  text-nowrap  bg-success rounded-top-2 px-1 align-self-end "
+              style={{ fontSize: "0.8vw" }}
+            >
+              Hall 4
+            </span>
+          </div>
+        </div>
+      </td>
+    );
+  }
+
+  function InsertingTime2() {
+    return (
+      <td className=" d-flex justify-content-center">
+        {" "}
+        <div
+          className="  position-absolute border border-success border-3 p-2  py-0 d-flex flex-column gap-1 "
+          style={{
+            width: "10%",
+            height: "85px",
+            backgroundColor: "rgba(41, 204, 57, 5%)",
+            borderColor: "rgba(41, 204, 57, 100%)",
+          }}
+        >
+          <div className="d-flex flex-row gap-3">
+            <div
+              className="col-4 bg-success px-1  rounded-3 text-white  "
+              style={{ fontSize: "11px" }}
+            >
+              {StartTime}
+            </div>
+            <div
+              className="col-4 bg-success px-1 rounded-3 text-white "
+              style={{ fontSize: "11px" }}
+            >
+              {EndTime}
+            </div>
+          </div>
+          <div
+            className="col-6 bg-success px-1  rounded-3 text-white col-7 "
+            style={{ fontSize: "11px" }}
+          >
+            Theory
+          </div>
+          <span className="text-success-emphasis " style={{ fontSize: "10px" }}>
+            Computational
+          </span>
+          <div className="d-flex flex-row justify-content-between mt-1">
+            <span
+              className="text-success-emphasis col-2 "
+              style={{ fontSize: "9.5%" }}
+            >
+              Dr,Sara
+            </span>
+            <span
+              className="col-4 text-white  bg-success rounded-top-2 px-1 "
+              style={{ fontSize: "10px" }}
+            >
+              Hall 4
+            </span>
+          </div>
+        </div>
+      </td>
+    );
+  }
+
+  function ChoosingTime() {
+    return StartTime === "8:30"
+      ? DifferentTime === 2
+        ? InsertingTime2()
+        : InsertingTime1()
+      : "";
+  }
+
   return (
     <div className="bg-white p-4 border-black border-2 d-flex flex-column gap-4 shadow">
       {/* top */}
@@ -75,20 +199,19 @@ const Time_table = () => {
       </div>
 
       <div
-          className="  col-10 rounded-start-2 position-absolute ps-0 d-flex justify-content-start align-items-center"
-          style={{
-            top: `${ttime + top}px`,
-            backgroundColor: "#FF6633",
-            height: "5px",
-          }}
-        >
-          <div
-            className="rounded-circle p-2  "
-            style={{ backgroundColor: "#FF6633" }}
-          ></div>
-        </div>
+        className="  col-10 rounded-start-2 position-absolute ps-0 d-flex justify-content-start align-items-center"
+        style={{
+          top: `${ttime + top}px`,
+          backgroundColor: "#FF6633",
+          height: "5px",
+        }}
+      >
+        <div
+          className="rounded-circle p-2  "
+          style={{ backgroundColor: "#FF6633" }}
+        ></div>
+      </div>
       <table className="table table-bordered ">
-        
         <thead>
           <tr>
             <th scope="col-1 ">
@@ -106,59 +229,7 @@ const Time_table = () => {
         <tbody>
           <tr scope="row ">
             <td className=" text-secondary-emphasis ">8:30</td>
-            <td className=" d-flex justify-content-center">
-              {" "}
-              <div
-                className="  position-absolute border border-success border-3 p-2  py-0 d-flex flex-column gap-1 "
-                style={{
-                  width: "10%",
-                  height: "85px",
-                  backgroundColor: "rgba(41, 204, 57, 5%)",
-                  borderColor: "rgba(41, 204, 57, 100%)",
-                }}
-              >
-                <div className="d-flex flex-row gap-3">
-                  <div
-                    className="col-4 bg-success px-1  rounded-3 text-white  "
-                    style={{ fontSize: "11px" }}
-                  >
-                    08:30
-                  </div>
-                  <div
-                    className="col-4 bg-success px-1 rounded-3 text-white "
-                    style={{ fontSize: "11px" }}
-                  >
-                    10:30
-                  </div>
-                </div>
-                <div
-                  className="col-6 bg-success px-1  rounded-3 text-white col-7 "
-                  style={{ fontSize: "11px" }}
-                >
-                  Theory
-                </div>
-                <span
-                  className="text-success-emphasis "
-                  style={{ fontSize: "10px" }}
-                >
-                  Computational
-                </span>
-                <div className="d-flex flex-row justify-content-between mt-1">
-                  <span
-                    className="text-success-emphasis col-2 "
-                    style={{ fontSize: "9.5%" }}
-                  >
-                    Dr,Sara
-                  </span>
-                  <span
-                    className="col-4 text-white  bg-success rounded-top-2 px-1 "
-                    style={{ fontSize: "10px" }}
-                  >
-                    Hall 4
-                  </span>
-                </div>
-              </div>
-            </td>
+            {day === "monday"&&ChoosingTime()}
             <td></td>
             <td></td>
             <td></td>
@@ -178,59 +249,9 @@ const Time_table = () => {
           </tr>
           <tr scope="row">
             <td className="col-1 text-secondary-emphasis">10:30</td>
-            <td className=" d-flex justify-content-center">
-              {" "}
-              <div
-                className="  position-absolute border border-success border-3 p-2  py-0 d-flex flex-column gap-1 mt-2"
-                style={{
-                  width: "10%",
-                  height: "85px",
-                  backgroundColor: "rgba(41, 204, 57, 5%)",
-                  borderColor: "rgba(41, 204, 57, 100%)",
-                }}
-              >
-                <div className="d-flex flex-row gap-3">
-                  <div
-                    className="col-4 bg-success px-1  rounded-3 text-white  "
-                    style={{ fontSize: "11px" }}
-                  >
-                    08:30
-                  </div>
-                  <div
-                    className="col-4 bg-success px-1 rounded-3 text-white "
-                    style={{ fontSize: "11px" }}
-                  >
-                    10:30
-                  </div>
-                </div>
-                <div
-                  className="col-6 bg-success px-1  rounded-3 text-white col-7 "
-                  style={{ fontSize: "11px" }}
-                >
-                  Theory
-                </div>
-                <span
-                  className="text-success-emphasis "
-                  style={{ fontSize: "10px" }}
-                >
-                  Data Comunnication
-                </span>
-                <div className="d-flex flex-row justify-content-between mt-1">
-                  <span
-                    className="text-success-emphasis col-2 "
-                    style={{ fontSize: "9.5%" }}
-                  >
-                    Dr,Sara
-                  </span>
-                  <span
-                    className="col-4 text-white  bg-success rounded-top-2 px-1 "
-                    style={{ fontSize: "10px" }}
-                  >
-                    Hall 4
-                  </span>
-                </div>
-              </div>
-            </td>
+           
+            {InsertingTime1("10:13", "9:")}
+            
             <td></td>
             <td></td>
             <td></td>

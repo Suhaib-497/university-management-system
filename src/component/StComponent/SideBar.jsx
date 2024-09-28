@@ -45,9 +45,9 @@ const SideBar = ({ toggleSidebar, show }) => {
   }
 
   return (
-    <div className="d-flex h-100">
-      <div className={`${show ? "col-3 bg-primary" : "col-9"} `}>
-        <div className="bg-info  text-white rounded-end-5 flex-column d-flex align-items-center gap-4 h-100 ">
+    <div className="d-flex h-100 ">
+      <div className={`${show ? "col-3 bg-primary" : "col-9"}  `}>
+        <div className="bg-info  text-white rounded-end-5 flex-column d-flex align-items-center gap-4 h-100     ">
           <button
             className="btn "
             type="button"
