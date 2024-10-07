@@ -13,7 +13,7 @@ const FacultyDashboard = ({ toggleSidebar, show }) => {
     Dashboard: "FacultyDashboard",
     Student: "Student",
     Courses: "Courses",
-    Time_table: "Time_table",
+    Time_table: "FtTime_table",
     Exams: "FtExams",
       
   };
@@ -45,7 +45,7 @@ const FacultyDashboard = ({ toggleSidebar, show }) => {
   }
 
   return (
-    <div className="d-flex h-100">
+    <div className="d-flex vh-100">
       <div className={`${show ? "col-3 bg-primary" : "col-9"} `}>
         <div className="bg-info  text-white rounded-end-5 flex-column d-flex align-items-center gap-4 h-100 ">
           <button

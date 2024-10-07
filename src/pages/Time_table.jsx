@@ -10,7 +10,7 @@ const Time_table = ({
   const [top, setTop] = useState(200);
   const DifferentTime = Math.abs(parseFloat(StartTime) - parseFloat(EndTime));
   console.log(DifferentTime);
-  parseInt;
+  const calculateLine=(ttime*(2/3)+top)
   useEffect(() => {
     const Interval = setInterval(() => {
       const now = new Date();
@@ -27,28 +27,28 @@ const Time_table = ({
         setTop(200);
         break;
       case 9:
-        setTop(260);
+        setTop(240);
         break;
       case 10:
-        setTop(320);
+        setTop(280);
         break;
       case 11:
-        setTop(380);
+        setTop(320);
         break;
       case 12:
-        setTop(440);
+        setTop(360);
         break;
       case 13:
-        setTop(500);
+        setTop(400);
         break;
       case 14:
-        setTop(560);
+        setTop(440);
         break;
       case 15:
-        setTop(620);
+        setTop(480);
         break;
       case 16:
-        setTop(680);
+        setTop(520);
         break;
       default:
         setTop(200);
@@ -201,7 +201,7 @@ const Time_table = ({
       <div
         className="  col-10 rounded-start-2 position-absolute ps-0 d-flex justify-content-start align-items-center"
         style={{
-          top: `${ttime + top}px`,
+          top: `${calculateLine}px`,
           backgroundColor: "#FF6633",
           height: "5px",
         }}
@@ -228,7 +228,7 @@ const Time_table = ({
         </thead>
         <tbody>
           <tr scope="row ">
-            <td className=" text-secondary-emphasis ">8:30</td>
+            <td className=" text-secondary-emphasis ">8</td>
             {day === "monday"&&ChoosingTime()}
             <td></td>
             <td></td>
@@ -238,7 +238,7 @@ const Time_table = ({
             <td></td>
           </tr>
           <tr scope="row">
-            <td className="col-1 text-secondary-emphasis">9:30</td>
+            <td className="col-1 text-secondary-emphasis">9</td>
             <td></td>
             <td></td>
             <td></td>
@@ -248,7 +248,7 @@ const Time_table = ({
             <td></td>
           </tr>
           <tr scope="row">
-            <td className="col-1 text-secondary-emphasis">10:30</td>
+            <td className="col-1 text-secondary-emphasis">10</td>
            
             {InsertingTime1("10:13", "9:")}
             
@@ -260,7 +260,7 @@ const Time_table = ({
             <td></td>
           </tr>
           <tr scope="row">
-            <td className="col-1 text-secondary-emphasis">11:30</td>
+            <td className="col-1 text-secondary-emphasis">11</td>
             {/* <td className=" d-flex justify-content-center">
               {" "}
               <div
@@ -276,13 +276,13 @@ const Time_table = ({
                     className="bg-success px-1  rounded-3 text-white  "
                     style={{ fontSize: "11px" }}
                   >
-                    08:30
+                    08
                   </div>
                   <div
                     className="bg-success px-1 rounded-3 text-white "
                     style={{ fontSize: "11px" }}
                   >
-                    10:30
+                    10
                   </div>
                 </div>
                 <div
@@ -314,7 +314,7 @@ const Time_table = ({
             <td></td>
           </tr>
           <tr scope="row">
-            <td className="col-1 text-secondary-emphasis">12:30</td>
+            <td className="col-1 text-secondary-emphasis">12</td>
             <td></td>
             <td></td>
             <td></td>
@@ -324,7 +324,7 @@ const Time_table = ({
             <td></td>
           </tr>
           <tr scope="row">
-            <td className="col-1 text-secondary-emphasis">1:30</td>
+            <td className="col-1 text-secondary-emphasis">1</td>
             <td></td>
             <td></td>
             <td></td>
@@ -334,7 +334,7 @@ const Time_table = ({
             <td></td>
           </tr>
           <tr scope="row">
-            <td className="col-1 text-secondary-emphasis">2:30</td>
+            <td className="col-1 text-secondary-emphasis">2</td>
             <td></td>
             <td></td>
             <td></td>
@@ -344,7 +344,7 @@ const Time_table = ({
             <td></td>
           </tr>
           <tr scope="row">
-            <td className="col-1 text-secondary-emphasis">3:30</td>
+            <td className="col-1 text-secondary-emphasis">3</td>
             <td></td>
             <td></td>
             <td></td>
@@ -354,7 +354,7 @@ const Time_table = ({
             <td></td>
           </tr>
           <tr scope="row">
-            <td className="col-1 text-secondary-emphasis">4:30</td>
+            <td className="col-1 text-secondary-emphasis">4</td>
             <td></td>
             <td></td>
             <td></td>

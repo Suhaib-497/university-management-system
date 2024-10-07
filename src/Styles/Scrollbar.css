@@ -27,4 +27,22 @@
     border-radius: 20px;
     
   }
+
+  /* Custom class to hide the scrollbar but allow scrolling */
+.hide-scrollbar {
+  overflow: scroll;          /* Enable scrolling */
+  scrollbar-width: none;     /* Hide scrollbar in Firefox */
+  -ms-overflow-style: none;  /* Hide scrollbar in IE and Edge */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;             /* Hide scrollbar in Chrome, Safari, and Opera */
+}
+
+.custom-placeholder::placeholder {
+  font-size: larger;
+  color: rgba(45, 49, 166, 20%) !important; 
+  opacity: 1 !important; 
+}
+
   

@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
 import BorderColorRoundedIcon from "@mui/icons-material/BorderColorRounded";
 import AddGrade from "../pages/AddGrade";
-import { Link } from "react-router-dom";
+
 
 const FtExams = () => {
   const [on, setOn] = useState(false);
@@ -22,11 +22,13 @@ const FtExams = () => {
     },
   ]);
 
-  function CreateRow() {
+  
+
+  function AddignNEwGrade(newGrade) {
     const newRow = {
       Id: (Rows.length + 1).toString(), // Update the ID based on the current number of rows
-      Name: "Kristin Watson",
-      Seminar: "Programming-1",
+      Name: newGrade.name,
+      Seminar: newGrade.Seminar.Average,
       Report: "9/24",
       Quiz: "11/12",
       Projects: "5/6",
@@ -71,19 +73,23 @@ const FtExams = () => {
     ));
   }
 
+  const handleClose = () => {
+    setOn((prev) => !prev);
+  };
+
   return (
     <div
       className="d-flex flex-column align-items-center gap-4 overflow-auto"
       style={{ height: "540px" }}
     >
-        <AddGrade on={on} />
+      <AddGrade on={on} handleClose={handleClose} AddignNEwGrade={AddignNEwGrade} />
       <button
         className="btn btn-light align-self-end rounded-pill"
         onClick={() => setOn((prev) => !prev)}
       >
         Add Grade
       </button>
-      
+
       <table cellPadding={10}>
         <thead className="bg-primary text-white">
           <tr className="row-cols-6 rounded-3">
