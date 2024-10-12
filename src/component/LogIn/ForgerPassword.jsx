@@ -1,9 +1,25 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import UniversityManagmentSytem from "./UniversityManagmentSytem";
 import { Link } from "react-router-dom";
 import MailIcon from "@mui/icons-material/Mail";
+import { useAuth } from "../../Context/AuthContext";
 
 const ForgetPassword = () => {
+  const emailRef = useRef();
+  const { forgetPassword } = useAuth();
+  const [error, setError] = useState();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      await forgetPassword(emailRef.current.value);
+      console.log("succes")
+    } catch (err) {
+      console.error(err);
+      setError("the is incorrect");
+    }
+  };
   return (
     <div
       className="d-flex flex-row  vh-100"
@@ -18,6 +34,7 @@ const ForgetPassword = () => {
       {/* right */}
 
       <div className="col-5 bg-white d-flex flex-column justify-content-center align-items-center gap-2 py-5">
+        {error && <div className="alert alert-danger">{error}</div>}
         <div className="text-start">
           <h1 className="fw-bold m-0">Forget your password ?</h1>
           <span className="text-black-50 fs-5">
@@ -26,6 +43,7 @@ const ForgetPassword = () => {
         </div>
 
         <form
+          onSubmit={handleSubmit}
           action=""
           className="w-100 d-flex flex-column justify-content-center align-items-center gap-4"
         >
@@ -35,15 +53,19 @@ const ForgetPassword = () => {
                 <MailIcon className="text-info text-opacity-25 fs-1 " />
               </span>
               <input
+                ref={emailRef}
                 type="email"
                 className="form-control bg-info bg-opacity-10 border border-2 border-info-subtle border-start-0 ps-0 py-2 rounded-start-0  custom-placeholder"
                 placeholder="Email "
               />
             </div>
           </div>
-          <Link to={`/VerficationCode`} className="btn btn-lg btn-info opacity-75 text-white col-10 py-3">
+          <button
+            type="submit"
+            className="btn btn-lg btn-info opacity-75 text-white col-10 py-3"
+          >
             Send
-          </Link>
+          </button>
         </form>
       </div>
     </div>

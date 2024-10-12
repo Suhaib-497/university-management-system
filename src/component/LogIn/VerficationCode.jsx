@@ -1,9 +1,11 @@
 import React from "react";
 import UniversityManagmentSytem from "./UniversityManagmentSytem";
-import { Link } from "react-router-dom";
-import MailIcon from "@mui/icons-material/Mail";
+import { Link, useLocation } from "react-router-dom";
+
 
 const VerficationCode = () => {
+  
+
   return (
     <div
       className="d-flex flex-row j vh-100"
@@ -26,6 +28,7 @@ const VerficationCode = () => {
         </div>
 
         <form
+          onSubmit={handleSubmit}
           action=""
           className="w-100 d-flex flex-column justify-content-center align-items-center gap-4"
         >
@@ -64,7 +67,9 @@ const VerficationCode = () => {
             Submit
           </Link>
 
-          <button className="bg-transparent border-0 text-info opacity-75 fs-5">Resent code</button>
+          <button className="bg-transparent border-0 text-info opacity-75 fs-5">
+            Resent code
+          </button>
         </form>
       </div>
     </div>

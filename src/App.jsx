@@ -13,18 +13,22 @@ import Courses from "./pages/Courses";
 import Time_table from "./pages/Time_table";
 import StudentExam from "./pages/StudentExam";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./Context/AuthContext";
+import PrivateRoute from "./PrivateRoute";
 
 const App = () => {
   return (
     <BrowserRouter>
+    <AuthProvider>
       <Routes>
-        <Route index element={<LogIn />} />
+        <Route  path="/login" element={<LogIn />} />
         <Route path="/ForgetPassword" element={<ForgetPassword />} />
         <Route path="/VerficationCode" element={<VerficationCode />} />
         <Route path="/NewPassword" element={<NewPassword />} />
         <Route path="/CreateAccount" element={<CreateAccount />} />
+        <Route element={<PrivateRoute/>}>
         <Route path="/" element={<MainLayout />}>
-          <Route path="StDashboard" element={<StDashboard />} />
+          <Route path="Dashboard" element={<StDashboard />} />
           <Route path="/Courses" element={<Courses />} />
           <Route path="/Time_table" element={<Time_table />} />
           <Route path="/Exams" element={<StudentExam />} />
@@ -33,7 +37,9 @@ const App = () => {
           <Route path="/FtExams" element={<FtExams />} />
           <Route path="/FtTime_table" element={<FtTime_table />} />
         </Route>
+        </Route>
       </Routes>
+      </AuthProvider>
     </BrowserRouter>
   );
 };

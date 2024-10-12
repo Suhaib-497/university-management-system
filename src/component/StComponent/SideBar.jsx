@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 
 const SideBar = ({ toggleSidebar, show }) => {
   const sideNames = {
-    Dashboard: "Dashbord",
+    Dashboard: "Dashboard",
     Courses: "Courses",
     Time_table: "Time_table",
     Exams: "Exams",
@@ -25,7 +25,7 @@ const SideBar = ({ toggleSidebar, show }) => {
       <div className="d-flex ms-3 flex-column bg-secondary ">
         <div className="p-2  bg-primary rounded-pill rounded-top-0 rounded-start-0 "></div>
         <div className=" bg-primary  text-primary ">
-          <Link className="ps-4 rounded-start-pill bg-secondary d-flex text-decoration-none">
+          <Link className="ps-4 rounded-start-pill bg-secondary d-flex text-decoration-none" to={SideName}>
             {SideName}
           </Link>
         </div>

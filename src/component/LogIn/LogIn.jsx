@@ -1,14 +1,52 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import UniversityManagmentSytem from "./UniversityManagmentSytem";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
 import MailIcon from "@mui/icons-material/Mail";
 import RemoveModeratorOutlinedIcon from "@mui/icons-material/RemoveModeratorOutlined";
-import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
-import GoogleIcon from "@mui/icons-material/Google";
+import { useAuth } from "../../Context/AuthContext";
+
 const LogIn = () => {
-  const [userName, setUserName] = useState();
-  const [password, setPassword] = useState();
+  const navigate=useNavigate();
+  const [error, setError] = useState();
+  const [loading, setLoading] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const { signIn, signInWithGoogle } = useAuth();
+
+  const signInGoogle = async () => {
+    try {
+      setError("");
+      setLoading(true);
+      await signInWithGoogle();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+      const email=emailRef.current.value;
+      
+    try {
+      setError("");
+      setLoading(true);
+      await signIn(
+        rememberMe,
+        emailRef.current.value,
+        passwordRef.current.value
+      );
+
+      if(email.includes("st") ){
+        navigate("/StDashboard")
+      }
+    } catch (err) {
+      setError("The Password or Email is incorrecr");
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <div
       className="d-flex flex-row vh-100"
@@ -24,13 +62,20 @@ const LogIn = () => {
 
       <div className="col-5 bg-white d-flex flex-column justify-content-start align-items-center gap-2 py-5">
         <div className="text-center">
+          {error && <div className="alert alert-danger">{error}</div>}
+
           <h1 className="fw-bold m-0">Login to your Account</h1>
           <span className="text-black-50 fs-5">
             Welcome back! Select method to log in:
           </span>
         </div>
-        <div className="d-flex flex-row gap-4">
-          <button className="btn  border-info-subtle border-2 fw-semibold px-5 py-2 rounded-3 ">
+        <div className="d-flex flex-row justify-content-start col-9">
+          <button
+            className="btn  border-info-subtle border-2 fw-semibold px-5 py-2 rounded-3 w-100"
+            onClick={() => {
+              signInGoogle();
+            }}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               x="0px"
@@ -58,9 +103,6 @@ const LogIn = () => {
             </svg>{" "}
             Google
           </button>
-          <button className="btn border-info-subtle border-2 fw-semibold px-5 py-2 rounded-3">
-            <FacebookRoundedIcon className="text-primary fs-3" /> Facebook
-          </button>
         </div>
 
         <div className="d-flex flex-row justify-content-center gap-3 w-100">
@@ -70,6 +112,7 @@ const LogIn = () => {
         </div>
 
         <form
+          onSubmit={handleSubmit}
           action=""
           className="w-100 d-flex flex-column justify-content-center align-items-center gap-4"
         >
@@ -79,14 +122,11 @@ const LogIn = () => {
                 <MailIcon className="text-info text-opacity-25 fs-1 " />
               </span>
               <input
+                ref={emailRef}
                 required
                 type="email"
                 className="form-control bg-info bg-opacity-10 border border-2 border-info-subtle border-start-0 ps-0 py-2 rounded-start-0  custom-placeholder"
                 placeholder="Email "
-                value={userName}
-                onChange={(e) => {
-                  setUserName(e.target.value);
-                }}
               />
             </div>
 
@@ -95,21 +135,23 @@ const LogIn = () => {
                 <RemoveModeratorOutlinedIcon className="text-info text-opacity-25 fs-1 " />
               </span>
               <input
+                ref={passwordRef}
                 required
                 type="password"
                 className="form-control bg-info bg-opacity-10 border border-2 border-info-subtle border-start-0  ps-0  py-3 rounded-start-0   custom-placeholder"
                 placeholder="Password "
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
               />
               {/* <span className=" input-group-text bg-info bg-opacity-10 border border-2 border-info-subtle border-start-0 rounded-start-0  "><VisibilityOffOutlinedIcon className="text-info text-opacity-25 fs-1 " /></span> */}
             </div>
 
             <div className="d-flex flex-row justify-content-between col-12">
               <div className="d-flex flex-row align-items-center gap-2 ">
-                <input type="checkbox" className="border  border-info" />
+                <input
+                  checked={rememberMe}
+                  type="checkbox"
+                  className="border  border-info"
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                />
                 <span className="text-black-50">Remember me</span>
               </div>
 
@@ -121,7 +163,11 @@ const LogIn = () => {
               </Link>
             </div>
           </div>
-          <button className="btn btn-lg btn-info opacity-75 text-white col-10 py-3">
+          <button
+            disabled={loading}
+            className="btn btn-lg btn-info opacity-75 text-white col-10 py-3"
+            type="submit"
+          >
             LogIn
           </button>
 
@@ -131,7 +177,7 @@ const LogIn = () => {
               to={`/CreateAccount`}
               className="text-decoration-none text-info text-opacity-75"
             >
-              Ceate an account
+              SignUp
             </Link>
           </div>
         </form>
