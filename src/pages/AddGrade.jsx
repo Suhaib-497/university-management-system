@@ -3,19 +3,78 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import ClearIcon from "@mui/icons-material/Clear";
-const AddGrade = ({ on, handleClose, AddignNEwGrade }) => {
+import {
+  collection,
+  doc,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
+import { db } from "../Config/Firebase";
+const AddGrade = ({ on, handleClose, stId }) => {
   const navigate = useNavigate();
 
   const [grades, setGrades] = useState({
-    Seminar: [{ Value: "", Average: 0 }],
-    Quiz: [{ value: "", Average: 0 }],
-    Projects: [{ value: "", Average: 0 }],
-    Midterm: [{ value: "", Average: 0 }],
-    Final: [{ value: "", Average: 0 }],
+    Seminar: [{ Value: "" }],
+    Quiz: [{ value: "" }],
+    Projects: [{ value: "" }],
+    Midterm: [{ value: "" }],
+    Final: [{ value: "" }],
   });
 
-  const [id, setId] = useState();
+  const [averages, setAverages] = useState({
+    Seminar: 0,
+    Quiz: 0,
+    Projects: 0,
+    Midterm: 0,
+    Final: 0,
+  });
+
+  // const [id, setId] = useState();
   const [name, setName] = useState("");
+  const [students, setStudents] = useState([]);
+  const studentCollectionRef = collection(db, "students");
+  const [current_Student, setCurrent_Student] = useState([]);
+
+  useEffect(() => {
+    const getdata = async () => {
+      const data = await getDocs(studentCollectionRef);
+      setStudents(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      setCurrent_Student(
+        data.docs.find((doc) => doc.id === stId)?.data() || {}
+      );
+    };
+    getdata(); // Make sure to call the function
+  }, []);
+
+  const updateUser = async (username) => {
+    const q = query(studentCollectionRef, where("userName", "==", username));
+
+    try {
+      const querySnapshot = await getDocs(q);
+
+      if (!querySnapshot.empty) {
+        querySnapshot.forEach(async (docsnap) => {
+          const studentDoc = doc(db, "students", docsnap.id);
+
+          const newField = {
+            grades,
+            averages,
+            TotalAverage: TotalAvg,
+          };
+
+          await updateDoc(studentDoc, newField);
+          console.log("updated succes");
+          navigate("/FtExams");
+        });
+      } else {
+        console.log("no student found");
+      }
+    } catch (error) {
+      console.error("Error updating document: ", error);
+    }
+  };
 
   const handleCreate = (e, name) => {
     e.preventDefault();
@@ -44,37 +103,46 @@ const AddGrade = ({ on, handleClose, AddignNEwGrade }) => {
     );
     setGrades({ ...grades, [name]: updated });
   };
+
   useEffect(() => {
     const CalculateAverage = (name) => {
       const total = grades[name].reduce(
         (st, current) => st + Number(current.value || 0),
         0
       );
-      const totalAvg = total / grades[name].length || 0;
-
-      const UpdateAvg = grades[name].map((grade) => ({
-        ...grade,
-        Average: totalAvg,
-      }));
-
-      ["Seminar", "Quiz", "Projects", "Midterm", "Final"].forEach((category) =>
-        CalculateAverage(category)
-      );
-
-      setGrades({ ...grades, [name]: UpdateAvg });
-      return totalAvg;
+      return total / grades[name].length || 0;
     };
-  }, [grades]);
+
+    const updatedAverage = {
+      Seminar: CalculateAverage("Seminar"),
+      Quiz: CalculateAverage("Quiz"),
+      Projects: CalculateAverage("Projects"),
+      Midterm: CalculateAverage("Midterm"),
+      Final: CalculateAverage("Final"),
+    };
+
+    if (
+      updatedAverage.Seminar !== averages.Seminar ||
+      updatedAverage.Quiz !== averages.Quiz ||
+      updatedAverage.Projects !== averages.Projects ||
+      updatedAverage.Midterm !== averages.Midterm ||
+      updatedAverage.Final !== averages.Final
+    ) {
+      setAverages(updatedAverage);
+    }
+  }, [grades, averages]);
 
   const TotalAverage = () => {
     const totalAverage =
-      grades["Seminar"][0].Average +
-      grades["Quiz"][0].Average +
-      grades["Projects"][0].Average +
-      grades["Midterm"][0].Average +
-      grades["Final"][0].Average;
-    return totalAverage || 0;
+      averages.Seminar +
+      averages.Quiz +
+      averages.Final +
+      averages.Midterm +
+      averages.Projects;
+    return totalAverage / 5 || 0;
   };
+
+  const TotalAvg = TotalAverage();
 
   const Render = (name, grade) => {
     return grade[name].map((Sm, index) => (
@@ -101,11 +169,13 @@ const AddGrade = ({ on, handleClose, AddignNEwGrade }) => {
 
         <input
           type="number"
-          placeholder="Seminar"
+          placeholder={`${ name}`}
           className="form-control bg-secondary border-primary border-1"
           name="seminar"
-          value={Sm.value}
+          value={Sm.value || ""}
           onChange={(e) => handleChange(e, name, index)}
+          min={"0"}
+          max={"100"}
         />
       </div>
     ));
@@ -113,15 +183,21 @@ const AddGrade = ({ on, handleClose, AddignNEwGrade }) => {
 
   const SubmitForm = (e) => {
     e.preventDefault();
-    const NewGrade = {
-      id,
-      name,
-      grades,
-    };
-    AddignNEwGrade(NewGrade);
-    toast.success("New Grade Added");
+
+    updateUser(name);
+
+    console.log("succes");
     return navigate("/FtExams");
   };
+  const currentData = {
+    userNamee: current_Student.userName || '',
+    Seminar: current_Student.averages?.Seminar || 'N/A',
+    Quiz: current_Student.averages?.Quiz || 'N/A',
+    Projects: current_Student.averages?.Projects || 'N/A',
+    Midterm: current_Student.averages?.Midterm || 'N/A',
+    Final: current_Student.averages?.Final || 'N/A',
+  };
+  
   return (
     <div
       className={`${
@@ -141,21 +217,10 @@ const AddGrade = ({ on, handleClose, AddignNEwGrade }) => {
 
             <div className="d-flex flex-row justify-content-evenly">
               <div className="">
-                <label htmlFor="Id">Id</label>
-                <input
-                  type="number"
-                  placeholder=" Id"
-                  className="form-control bg-secondary border-primary border-1"
-                  name="Id"
-                  value={id}
-                  onChange={(e) => setId(e.target.value)}
-                />
-              </div>
-              <div className="">
                 <label htmlFor="name">Full Name</label>
                 <input
                   type="text"
-                  placeholder="Full Name"
+                  placeholder={` "Full Name"`}
                   className="form-control bg-secondary border-primary border-1"
                   name="name"
                   value={name}
@@ -175,7 +240,7 @@ const AddGrade = ({ on, handleClose, AddignNEwGrade }) => {
                     type="text "
                     className="col-4 "
                     readOnly
-                    placeholder={`${grades["Seminar"][0].Average}`}
+                    placeholder={`${averages.Seminar}`}
                   />
                 </div>
               </div>
@@ -189,7 +254,7 @@ const AddGrade = ({ on, handleClose, AddignNEwGrade }) => {
                     type="text "
                     className="col-4 "
                     readOnly
-                    placeholder={`${grades["Quiz"][0].Average}`}
+                    placeholder={`${averages.Quiz}`}
                   />
                 </div>
               </div>
@@ -204,7 +269,7 @@ const AddGrade = ({ on, handleClose, AddignNEwGrade }) => {
                     type="text "
                     className="col-4 "
                     readOnly
-                    placeholder={`${grades["Projects"][0].Average}`}
+                    placeholder={`${averages.Projects}`}
                   />
                 </div>
               </div>
@@ -218,7 +283,7 @@ const AddGrade = ({ on, handleClose, AddignNEwGrade }) => {
                     type="text "
                     className="col-4 "
                     readOnly
-                    placeholder={`${grades["Midterm"][0].Average}`}
+                    placeholder={`${averages.Midterm}`}
                   />
                 </div>
               </div>
@@ -233,7 +298,7 @@ const AddGrade = ({ on, handleClose, AddignNEwGrade }) => {
                     type="text "
                     className="col-4 "
                     readOnly
-                    placeholder={`${grades["Final"][0].Average}`}
+                    placeholder={`${averages.Final}`}
                   />
                 </div>
               </div>
@@ -252,12 +317,13 @@ const AddGrade = ({ on, handleClose, AddignNEwGrade }) => {
               </div>
 
               <div className="d-flex flex-row justify-content-end gap-2">
-                <button className="btn  btn-primary" onClick={handleClose}>
+                <button className="btn  btn-primary" type="button" onClick={handleClose}>
                   Close
                 </button>
                 <input
                   type="submit"
                   className="btn  btn-primary"
+                  value={"Submit"}
                   onClick={handleClose}
                 />
               </div>

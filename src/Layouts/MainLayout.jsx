@@ -17,19 +17,21 @@ const MainLayout = () => {
       style={{ transitionDuration: "1000ms"}}
     >
       <div
-        className={`${show ? "col" : "col-1"} `}
+        className={`${show ? "col" : "col"}  `}
         style={{ transitionDuration: "500ms" }}
       >
-        {/* <SideBar toggleSidebar={toggleSidebar} show={show} /> */}
-        <FacultySideBar toggleSidebar={toggleSidebar} show={show} />
+        <SideBar toggleSidebar={toggleSidebar} show={show} />
+        {/* <FacultySideBar toggleSidebar={toggleSidebar} show={show} /> */}
       </div>
       <div
-        className={`${show ? "col-9" : "col-11"} `}
+        className={`${show ? "col-10" : "col-11"} container  pe-0  `}
         style={{ transitionDuration: "1000ms" }}
       >
-        <NavBar show={show} />
-        <hr className="m-0 mb-2" />
-        <div className=" container">
+        
+        <NavBar show={show}  />
+        <hr className=" container  mt-5  position-fixed" />
+        
+        <div className="  mt-5">
           <Outlet />
         </div>
       </div>

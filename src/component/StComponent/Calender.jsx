@@ -29,7 +29,7 @@ const Calender = () => {
               </a>
             </li>
             <li>
-              <a class="dropdown-item" href="#">
+              <a className="dropdown-item" href="#">
                 january
               </a>
             </li>

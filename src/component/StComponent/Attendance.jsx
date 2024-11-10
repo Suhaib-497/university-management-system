@@ -5,28 +5,28 @@ const Attendance = () => {
     <div className="col-5 ">
             <div className="d-flex justify-content-between align-items-center flex-row">
               <h6 className="m-0">My visites</h6>
-              <div class="dropdown">
+              <div className="dropdown">
                 <button
-                  class="btn btn-secondary dropdown-toggle p-0"
+                  className="btn btn-secondary dropdown-toggle p-0"
                   type="button"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
                   December
                 </button>
-                <ul class="dropdown-menu">
+                <ul className="dropdown-menu">
                   <li>
-                    <a class="dropdown-item" href="#">
+                    <a className="dropdown-item" href="#">
                       Novemver
                     </a>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="#">
+                    <a className="dropdown-item" href="#">
                       August
                     </a>
                   </li>
                   <li>
-                    <a class="dropdown-item" href="#">
+                    <a className="dropdown-item" href="#">
                       january
                     </a>
                   </li>

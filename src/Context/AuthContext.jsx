@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { auth, GoogleProvider } from "../Config/Firebase";
+import { auth, db, GoogleProvider } from "../Config/Firebase";
 import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
@@ -12,6 +12,8 @@ import {
   browserLocalPersistence,
   browserSessionPersistence,
 } from "firebase/auth";
+import { collection, doc, getDoc, getDocs, query, where } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
@@ -20,8 +22,63 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
+  const navigate=useNavigate();
+
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
+
+  
+
+
+  const getUserFromCollection = async (email, collectionName) => {
+    const collectionRef = collection(db, collectionName);
+    const q = query(collectionRef, where("email", "==", email)); // Or use UID if you store it
+    const querySnapshot = await getDocs(q);
+    if (!querySnapshot.empty) {
+      // User found in this collection
+      const doc = querySnapshot.docs[0]; // Get the first document found
+      const userData = doc.data();
+      return { userData, collectionName };
+    }
+    return null;
+  };
+
+  const checkUserRole = async (email) => {
+    try {
+      const adminData = await getUserFromCollection(email, "admins");
+      if (adminData) {
+        
+        localStorage.setItem("role","admin")
+        console.log("Admin found:", adminData.userData);
+        navigate("/");
+        return;
+      }
+
+      const facultyData = await getUserFromCollection(email, "faculty");
+      if (facultyData) {
+        
+        localStorage.setItem("role","faculty")
+        console.log("Faculty found:", facultyData.userData);
+        navigate("/faculty-dashboard");
+        return;
+      }
+
+      const studentData = await getUserFromCollection(email, "students");
+      if (studentData) {
+       
+        localStorage.setItem("role","student")
+        
+        navigate("/Dashboard");
+        return;
+      }
+
+      setError("User not found in any collection.");
+    } catch (error) {
+      console.error("Error checking user role:", error);
+     
+    }
+  };
+
 
   const signUp = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
@@ -35,7 +92,11 @@ export const AuthProvider = ({ children }) => {
       ? browserLocalPersistence
       : browserSessionPersistence;
     return setPersistence(auth, PersistenceType).then(() => {
-      signInWithEmailAndPassword(auth, email, password);
+      return signInWithEmailAndPassword(auth, email, password).then((userCtredental)=>{
+      const userEmail=userCtredental.user.email;
+      checkUserRole(userEmail);}).catch((err)=>{
+        console.log("error during sign up")
+      })
     });
   };
 
@@ -48,19 +109,20 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logOut = () => {
+    localStorage.removeItem("role");
     return signOut(auth);
   };
-
-  
-
+  const currentRole=localStorage.getItem("role");
   useEffect(() => {
-    const unSubscribe = onAuthStateChanged(auth, (user) => {
+    
+    const unSubscribe = onAuthStateChanged(auth, async (user) => {
       setCurrentUser(user);
+     
       setLoading(false);
     });
     return unSubscribe;
   }, []);
-
+  
   const value = {
     currentUser,
     signIn,
@@ -69,7 +131,8 @@ export const AuthProvider = ({ children }) => {
     forgetPassword,
     logOut,
     sendVerification,
-   
+    currentRole,
+    
   };
   return (
     <AuthContext.Provider value={value}>

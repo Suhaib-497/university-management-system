@@ -7,6 +7,7 @@ import PendingActionsRoundedIcon from "@mui/icons-material/PendingActionsRounded
 import LibraryBooksRoundedIcon from "@mui/icons-material/LibraryBooksRounded";
 import SchoolRoundedIcon from "@mui/icons-material/SchoolRounded";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../Context/AuthContext";
 
 const FacultyDashboard = ({ toggleSidebar, show }) => {
   const sideNames = {
@@ -15,10 +16,12 @@ const FacultyDashboard = ({ toggleSidebar, show }) => {
     Courses: "Courses",
     Time_table: "FtTime_table",
     Exams: "FtExams",
-      
   };
   const [Toggler, SetToggler] = useState(sideNames.Dashboard);
   const [lineDash, setLineDash] = useState(sideNames.Dashboard);
+
+  const {currentRole}=useAuth();
+  console.log(currentRole);
 
   function ChangeSideBar(SideName) {
     return Toggler === SideName ? (
@@ -109,8 +112,6 @@ const FacultyDashboard = ({ toggleSidebar, show }) => {
               }}
             />
           </Link>
-         
-         
         </div>
       </div>
       <div
@@ -127,7 +128,6 @@ const FacultyDashboard = ({ toggleSidebar, show }) => {
         {ChangeSideBar(sideNames.Courses)}
         {ChangeSideBar(sideNames.Time_table)}
         {ChangeSideBar(sideNames.Exams)}
-        
       </div>
     </div>
   );

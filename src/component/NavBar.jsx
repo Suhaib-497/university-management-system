@@ -5,9 +5,9 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SearchIcon from "@mui/icons-material/Search";
 const NavBar = ({ show }) => {
   return (
-    <div className="justify-content-between d-flex mt-2">
+    <div className={`container d-flex flex-row justify-content-center align-items-center    position-fixed top-0  end-0 bg-secondary  ${show? "col-10":"col-12"}`} style={{ transitionDuration: "1000ms"}}>
       {/* middle part */}
-      <div className="col-4">
+      <div className="col-4 mt-2">
         <form className="form" action="">
           <div className="input-group mb-2 ">
             <input
@@ -27,8 +27,8 @@ const NavBar = ({ show }) => {
         </form>
       </div>
 
-      {/* left part */}
-      <div className="d-flex col-8 gap-2  justify-content-end">
+      {/* right part */}
+      <div className="d-flex col-8 gap-2  justify-content-end ">
         <div className="border border-end "></div>
         <div className="dropdown">
           <a

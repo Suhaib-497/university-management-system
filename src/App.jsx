@@ -5,6 +5,7 @@ import VerficationCode from "./component/LogIn/VerficationCode";
 import NewPassword from "./component/LogIn/Newpassword";
 import CreateAccount from "./component/LogIn/CreateAccount"
 import StDashboard from "./Dashboards/StDashboard";
+import StLibrary from "./pages/StLibrary";
 import FacultyDashboard from "./Dashboards/FacultyDashboard";
 import FtStudent from "./pages/FtStudent";
 import FtExams from "./pages/FtExams";
@@ -15,6 +16,7 @@ import StudentExam from "./pages/StudentExam";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./Context/AuthContext";
 import PrivateRoute from "./PrivateRoute";
+import Bookinformation from "./component/LibraryComponent/Bookinformation";
 
 const App = () => {
   return (
@@ -28,13 +30,15 @@ const App = () => {
         <Route path="/CreateAccount" element={<CreateAccount />} />
         <Route element={<PrivateRoute/>}>
         <Route path="/" element={<MainLayout />}>
-          <Route path="Dashboard" element={<StDashboard />} />
+          <Route   path="Dashboard" element={<StDashboard />} />
           <Route path="/Courses" element={<Courses />} />
           <Route path="/Time_table" element={<Time_table />} />
           <Route path="/Exams" element={<StudentExam />} />
-          <Route path="/FacultyDashboard" element={<FacultyDashboard />} />
+          <Route path="/stlibrary" element={<StLibrary/>} />
+          <Route path="/bookinformation" element={<Bookinformation/>} />
+          <Route  path="/faculty-dashboard" element={<FacultyDashboard />} />
           <Route path="/Student" element={<FtStudent />} />
-          <Route path="/FtExams" element={<FtExams />} />
+          <Route  path="/FtExams" element={<FtExams />} />
           <Route path="/FtTime_table" element={<FtTime_table />} />
         </Route>
         </Route>
