@@ -12,7 +12,7 @@ const FtStudent = () => {
     const getData = async () => {
       const data = await getDocs(studentCollectionRef);
       const studentsList = data.docs.map((doc) => {
-        console.log(doc.data()); 
+        console.log(doc.data());
         return { ...doc.data(), id: doc.data().customId || doc.data().id };
       });
       setStudents(studentsList);

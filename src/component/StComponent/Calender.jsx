@@ -39,7 +39,7 @@ const Calender = () => {
 
       <div className="bg-info text-white rounded-1 d-flex flex-row gap-3 p-2 col-9 ms-auto mt-4">
         <div className="col-2 my-1 bg-white rounded-circle"></div>
-        <p className="d-flex flex-column m-0 fs-6 col-12" >
+        <p className="d-flex flex-column m-0 fs-6 col-8" >
           Electronics lesson
           <span style={{ fontSize: "12px" }}>9.45- 10.30, 21 lesson</span>
         </p>
@@ -59,7 +59,7 @@ const Calender = () => {
         </div>
         <div className=" bg-secondary text-black rounded-1 d-flex flex-row gap-3 p-2 col-9 ms-auto">
           <div className="col-2 my-1 bg-light rounded-circle"></div>
-          <p className="d-flex flex-column m-0 fs-6 col-12">
+          <p className="d-flex flex-column m-0 fs-6 col-8">
             Electronics lesson
             <span style={{ fontSize: "12px" }}>9.45- 10.30, 21 lesson</span>
           </p>
@@ -75,7 +75,7 @@ const Calender = () => {
         </div>
         <div className=" bg-secondary text-black rounded-1 d-flex flex-row gap-3 p-2 col-9 ms-auto">
           <div className="col-2 my-1 bg-light rounded-circle"></div>
-          <p className="d-flex flex-column m-0 fs-6 col-12">
+          <p className="d-flex flex-column m-0 fs-6 col-8">
             Electronics lesson
             <span style={{ fontSize: "12px" }}>9.45- 10.30, 21 lesson</span>
           </p>
@@ -91,7 +91,7 @@ const Calender = () => {
         </div>
         <div className=" bg-secondary text-black rounded-1 d-flex flex-row gap-3 p-2 col-9 ms-auto">
           <div className="col-2 my-1 bg-light rounded-circle"></div>
-          <p className="d-flex flex-column m-0 fs-6 col-12">
+          <p className="d-flex flex-column m-0 fs-6 col-8">
             Electronics lesson
             <span style={{ fontSize: "12px" }}>9.45- 10.30, 21 lesson</span>
           </p>

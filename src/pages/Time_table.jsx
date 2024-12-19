@@ -9,7 +9,7 @@ const Time_table = ({
   const [hour, setHour] = useState(new Date().getHours());
   const [top, setTop] = useState(200);
   const DifferentTime = Math.abs(parseFloat(StartTime) - parseFloat(EndTime));
-  console.log(DifferentTime);
+  
   const calculateLine=(ttime*(2/3)+top)
   useEffect(() => {
     const Interval = setInterval(() => {
@@ -197,7 +197,7 @@ const Time_table = ({
           </span>
         </div>
       </div>
-
+        {/* the line */}
       <div
         className="  col-10 rounded-start-2 position-absolute ps-0 d-flex justify-content-start align-items-center"
         style={{

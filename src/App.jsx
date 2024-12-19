@@ -17,6 +17,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./Context/AuthContext";
 import PrivateRoute from "./PrivateRoute";
 import Bookinformation from "./component/LibraryComponent/Bookinformation";
+import SearchBook from "./pages/SearchBook";
+import AdminDashboard from "./Dashboards/AdminDashboard";
+import AdminStudent from "./component/Admin.Component/AdminStudent";
 
 const App = () => {
   return (
@@ -30,11 +33,14 @@ const App = () => {
         <Route path="/CreateAccount" element={<CreateAccount />} />
         <Route element={<PrivateRoute/>}>
         <Route path="/" element={<MainLayout />}>
-          <Route   path="Dashboard" element={<StDashboard />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard/>} />
+        <Route path="admin-Student" element={<AdminStudent />}/>
+          <Route  path="Dashboard" element={<StDashboard />} />
           <Route path="/Courses" element={<Courses />} />
           <Route path="/Time_table" element={<Time_table />} />
           <Route path="/Exams" element={<StudentExam />} />
           <Route path="/stlibrary" element={<StLibrary/>} />
+          <Route path="/booksearch" element={<SearchBook/>} />
           <Route path="/bookinformation" element={<Bookinformation/>} />
           <Route  path="/faculty-dashboard" element={<FacultyDashboard />} />
           <Route path="/Student" element={<FtStudent />} />

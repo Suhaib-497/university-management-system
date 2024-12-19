@@ -95,7 +95,8 @@ export const AuthProvider = ({ children }) => {
       return signInWithEmailAndPassword(auth, email, password).then((userCtredental)=>{
       const userEmail=userCtredental.user.email;
       checkUserRole(userEmail);}).catch((err)=>{
-        console.log("error during sign up")
+        console.error(err);
+        console.log("error during sign In")
       })
     });
   };

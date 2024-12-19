@@ -21,7 +21,9 @@ const SideBar = ({ toggleSidebar, show }) => {
     Time_table: "Time_table",
     Exams: "Exams",
     Library: "Library",
+    Free_Managment: "Managment",
     Scholar_ship: "Scholar_ship",
+    Form:"Form",
   };
   const [Toggler, SetToggler] = useState(sideNames.Dashboard);
   const [lineDash, setLineDash] = useState(sideNames.Dashboard);
@@ -48,7 +50,12 @@ const SideBar = ({ toggleSidebar, show }) => {
             {SideName}
           </Link>
         </div>
-        <div className="p-2  bg-primary rounded-pill rounded-bottom-0 rounded-start-0"></div>
+        <div
+          className="p-2  bg-primary rounded-pill rounded-bottom-0 rounded-start-0"
+          style={{ transitionDuration: "1000ms" }}
+        >
+          {" "}
+        </div>
       </div>
     ) : (
       <Link
@@ -80,7 +87,7 @@ const SideBar = ({ toggleSidebar, show }) => {
           <SpaceDashboardIcon
             className={`${
               lineDash == sideNames.Dashboard
-                ? "border-start border-white  "
+                ? "border-start border-bottom border-2 border-white rounded-2  "
                 : "border-start-0"
             } fs-2 `}
             onClick={() => {
@@ -94,7 +101,7 @@ const SideBar = ({ toggleSidebar, show }) => {
             <PersonIcon
               className={`${
                 lineDash == sideNames.student
-                  ? "border-start border-white"
+                  ? "border-start border-bottom border-2 border-white rounded-2"
                   : "border-start-0"
               } fs-2`}
               onClick={() => {
@@ -109,7 +116,7 @@ const SideBar = ({ toggleSidebar, show }) => {
             <AutoStoriesIcon
               className={`${
                 lineDash == sideNames.Courses
-                  ? "border-start border-white"
+                  ? "border-start border-bottom border-2 border-white rounded-2"
                   : "border-start-0"
               } fs-2`}
               onClick={() => {
@@ -119,11 +126,17 @@ const SideBar = ({ toggleSidebar, show }) => {
           </Link>
         )}
 
-<Link className="text-white" to={`${(currentRole==="student" && "/Exams") || (currentRole==="faculty" && "/FtExams")} `}>
+        <Link
+          className="text-white"
+          to={`${
+            (currentRole === "student" && "/Exams") ||
+            (currentRole === "faculty" && "/FtExams")
+          } `}
+        >
           <PendingActionsRoundedIcon
             className={`${
               lineDash == sideNames.Exams
-                ? "border-start border-white"
+                ? "border-start border-bottom border-2 border-white rounded-2"
                 : "border-start-0"
             } fs-2`}
             onClick={() => {
@@ -131,34 +144,33 @@ const SideBar = ({ toggleSidebar, show }) => {
             }}
           />
         </Link>
-        
-          <Link
-            className="text-white"
-            to={`${
-              (currentRole === "student" && "/Time_table") ||
-              (currentRole == "faculty" && "/FtTime_table")
-            }`}
-          >
-            <EventNoteRoundedIcon
-              className={`${
-                lineDash == sideNames.Time_table
-                  ? "border-start border-white"
-                  : "border-start-0"
-              } fs-2`}
-              onClick={() => {
-                SetToggler(sideNames.Time_table),
-                  setLineDash(sideNames.Time_table);
-              }}
-            />
-          </Link>
-        
-        
+
+        <Link
+          className="text-white"
+          to={`${
+            (currentRole === "student" && "/Time_table") ||
+            (currentRole == "faculty" && "/FtTime_table")
+          }`}
+        >
+          <EventNoteRoundedIcon
+            className={`${
+              lineDash == sideNames.Time_table
+                ? "border-start border-bottom border-2 border-white rounded-2"
+                : "border-start-0"
+            } fs-2`}
+            onClick={() => {
+              SetToggler(sideNames.Time_table),
+                setLineDash(sideNames.Time_table);
+            }}
+          />
+        </Link>
+
         {currentRole === "student" && (
-          <Link className="text-white">
+          <Link to={"/stlibrary"} className="text-white">
             <LibraryBooksRoundedIcon
               className={`${
                 lineDash == sideNames.Library
-                  ? "border-start border-white"
+                  ? "border-start border-bottom border-2 border-white rounded-2"
                   : "border-start-0"
               } fs-2`}
               onClick={() => {
@@ -172,7 +184,7 @@ const SideBar = ({ toggleSidebar, show }) => {
             <SchoolRoundedIcon
               className={`${
                 lineDash == sideNames.Scholar_ship
-                  ? "border-start border-white"
+                  ? "border-start border-bottom border-2 border-white rounded-2"
                   : "border-start-0"
               } fs-2`}
               onClick={() => {
@@ -187,90 +199,12 @@ const SideBar = ({ toggleSidebar, show }) => {
   }
 
   return (
-    <div className="d-flex h-100  position-fixed top-0 bottom-0 start-0 end-50">
-      <div className={`${show ? "col-1 bg-primary" : "col-2"}  `}>
+    <div
+      className="d-flex h-100  position-fixed top-0 bottom-0 start-0 "
+      style={{ right: "88.5%" }}
+    >
+      <div className={`${show ? "col-5 bg-primary" : "col-8"}  `}>
         <div className="d-flex flex-column vh-100 bg-info rounded-end-5 align-items-center pb-2">
-          {/* <div className="  text-white  flex-column d-flex align-items-center gap-4 h-100     ">
-            <button className="btn " type="button" onClick={toggleSidebar}>
-              <MenuIcon className="text-white" />
-            </button>
-            <Link to={"/"} className="text-white">
-              <SpaceDashboardIcon
-                className={`${
-                  lineDash == sideNames.Dashboard
-                    ? "border-start border-white  "
-                    : "border-start-0"
-                } fs-2 `}
-                onClick={() => {
-                  SetToggler(sideNames.Dashboard),
-                    setLineDash(sideNames.Dashboard);
-                }}
-              />
-            </Link>
-
-            <Link to={`/Courses`} className="text-white">
-              <AutoStoriesIcon
-                className={`${
-                  lineDash == sideNames.Courses
-                    ? "border-start border-white"
-                    : "border-start-0"
-                } fs-2`}
-                onClick={() => {
-                  SetToggler(sideNames.Courses), setLineDash(sideNames.Courses);
-                }}
-              />
-            </Link>
-            <Link className="text-white" to={`/Time_table`}>
-              <EventNoteRoundedIcon
-                className={`${
-                  lineDash == sideNames.Time_table
-                    ? "border-start border-white"
-                    : "border-start-0"
-                } fs-2`}
-                onClick={() => {
-                  SetToggler(sideNames.Time_table),
-                    setLineDash(sideNames.Time_table);
-                }}
-              />
-            </Link>
-            <Link className="text-white" to={`/Exams`}>
-              <PendingActionsRoundedIcon
-                className={`${
-                  lineDash == sideNames.Exams
-                    ? "border-start border-white"
-                    : "border-start-0"
-                } fs-2`}
-                onClick={() => {
-                  SetToggler(sideNames.Exams), setLineDash(sideNames.Exams);
-                }}
-              />
-            </Link>
-            <Link className="text-white">
-              <LibraryBooksRoundedIcon
-                className={`${
-                  lineDash == sideNames.Library
-                    ? "border-start border-white"
-                    : "border-start-0"
-                } fs-2`}
-                onClick={() => {
-                  SetToggler(sideNames.Library), setLineDash(sideNames.Library);
-                }}
-              />
-            </Link>
-            <Link className="text-white">
-              <SchoolRoundedIcon
-                className={`${
-                  lineDash == sideNames.Scholar_ship
-                    ? "border-start border-white"
-                    : "border-start-0"
-                } fs-2`}
-                onClick={() => {
-                  SetToggler(sideNames.Scholar_ship),
-                    setLineDash(sideNames.Scholar_ship);
-                }}
-              />
-            </Link>
-          </div> */}
           {changeIcons()}
           <div className="">
             <button className="bg-transparent border-0" onClick={handleLogOut}>
@@ -281,7 +215,7 @@ const SideBar = ({ toggleSidebar, show }) => {
       </div>
       <div
         className={`${
-          show ? "col-3" : "d-none"
+          show ? "col-12" : "d-none"
         } bg-primary text-white fs-5 d-flex flex-column justify-content-start  gap-3 rounded-end-5`}
       >
         <h5>
@@ -294,6 +228,22 @@ const SideBar = ({ toggleSidebar, show }) => {
           ChangeSideBar(sideNames.Dashboard, "faculty-dashboard")}
         {currentRole === "admin" &&
           ChangeSideBar(sideNames.Dashboard, "admin-dashboard")}
+        {currentRole === "admin" &&
+          ChangeSideBar(sideNames.student, "admin-Student")}
+
+        {currentRole === "admin" &&
+          ChangeSideBar(sideNames.Courses, "admin-courses")}
+        {currentRole === "admin" &&
+          ChangeSideBar(sideNames.Time_table, "admin-timetable")}
+        {currentRole === "admin" &&
+          ChangeSideBar(sideNames.Exams, "admin-exams")}
+        {currentRole === "admin" &&
+          ChangeSideBar(sideNames.Free_Managment, "admin-managment")}
+
+        {currentRole === "admin" &&
+          ChangeSideBar(sideNames.Library, "admin-library")}
+          {currentRole === "admin" &&
+          ChangeSideBar(sideNames.Form, "admin-form")}
 
         {currentRole === "faculty" &&
           ChangeSideBar(sideNames.student, "Student")}
@@ -303,11 +253,13 @@ const SideBar = ({ toggleSidebar, show }) => {
           ChangeSideBar(sideNames.Time_table, "FtTime_table")}
         {currentRole === "student" &&
           ChangeSideBar(sideNames.Courses, "Courses")}
-        {currentRole === "student" &&
-          ChangeSideBar(sideNames.Time_table, "Time_table")}
         {currentRole === "student" && ChangeSideBar(sideNames.Exams, "Exams")}
         {currentRole === "student" &&
+          ChangeSideBar(sideNames.Time_table, "Time_table")}
+
+        {currentRole === "student" &&
           ChangeSideBar(sideNames.Library, "stlibrary")}
+        {currentRole === "student" && ChangeSideBar("booksearch", "booksearch")}
         {currentRole === "student" &&
           ChangeSideBar(sideNames.Scholar_ship, "Scholar_ship")}
       </div>

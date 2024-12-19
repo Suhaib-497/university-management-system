@@ -6,6 +6,7 @@ import { Outlet } from "react-router-dom";
 
 const MainLayout = () => {
   const [show, setShow] = useState(false);
+  
 
   const toggleSidebar = () => {
     setShow((prevShow) => !prevShow); // Toggles the sidebar

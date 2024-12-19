@@ -5,20 +5,20 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SearchIcon from "@mui/icons-material/Search";
 const NavBar = ({ show }) => {
   return (
-    <div className={`container d-flex flex-row justify-content-center align-items-center    position-fixed top-0  end-0 bg-secondary  ${show? "col-10":"col-12"}`} style={{ transitionDuration: "1000ms"}}>
+    <div className={`container d-flex flex-row justify-content-center align-items-center    position-fixed top-0  end-0 bg-secondary  ${show? "col-10":"col-12"}`} style={{ transitionDuration: "500ms"}}>
       {/* middle part */}
       <div className="col-4 mt-2">
         <form className="form" action="">
           <div className="input-group mb-2 ">
             <input
               type="text"
-              className="form-control border-end-0 "
+              className="form-control border-end-0 rounded-pill rounded-end-0"
               placeholder="Search"
               aria-label="Recipient's username"
               aria-describedby="basic-addon2"
             />
             <span
-              className="input-group-text border-start-0 bg-white"
+              className="input-group-text border-start-0 bg-white rounded-end-pill"
               id="basic-addon2"
             >
               <SearchIcon />

@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import imgbook from "/Users/Suhaib/university managment system/src/img/image copy 5.png";
 import ShareIcon from "@mui/icons-material/Share";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import StarHalfIcon from "@mui/icons-material/StarHalf";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import HeadphonesIcon from "@mui/icons-material/Headphones";
+import Borrow from "./Borrow";
 import BookCard from "./BookCard";
 const Bookinformation = () => {
+  const [on, setOn] = useState(false);
+  console.log(on);
+  const toggleBorrow = () => setOn((prev) => !prev);
+
   const maxStars = 5;
   const rating = 4.5;
 
@@ -84,7 +89,10 @@ const Bookinformation = () => {
 
             {/* borrow && read now */}
             <div className="d-flex flex-row justify-content-evenly">
-              <button className="px-5 btn btn-primary">BORROW</button>
+              <button className="px-5 btn btn-primary" onClick={toggleBorrow}>
+                BORROW
+              </button>
+              {on &&<Borrow toggleBorrow={toggleBorrow} />  }
               <div className="d-flex flex-row justify-content-center align-items-center">
                 <button className="px-4 btn btn-success">READ NOW</button>
                 <button className="py-1 border-1 border-start btn  btn-success">
@@ -105,7 +113,7 @@ const Bookinformation = () => {
 
           <h6 className="text-black-50">Steve krug</h6>
 
-          <p className="" style={{fontSize:"0.75rem"}}>
+          <p className="" style={{ fontSize: "0.75rem" }}>
             Steve Krug is a usability consultant who has more than 30 years of
             experience as a user advocate for companies like Apple, Netscape,
             AOL, Lexus, and others. Based in part on the success of his first
@@ -114,24 +122,16 @@ const Bookinformation = () => {
           </p>
 
           <div className="d-flex flex-column">
-            <h6>
-              other Books
-            </h6>
+            <h6>other Books</h6>
 
             <div className="d-flex flex-row justify-content-start align-items-center gap-2">
-            <div className=" col-2 border border-1">
-
-            <img src={imgbook} alt="" className="img-fluid" />
-
+              <div className=" col-2 border border-1">
+                <img src={imgbook} alt="" className="img-fluid" />
+              </div>
+              <div className=" col-2 border border-1">
+                <img src={imgbook} alt="" className="img-fluid" />
+              </div>
             </div>
-            <div className=" col-2 border border-1">
-
-            <img src={imgbook} alt="" className="img-fluid" />
-
-            </div>
-
-            </div>
-
           </div>
         </div>
       </div>
